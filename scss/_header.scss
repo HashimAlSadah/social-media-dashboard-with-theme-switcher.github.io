@@ -1,0 +1,116 @@
+@use "./config";
+@use "./light-theme";
+@use "./dark-theme";
+@use "./mixin";
+
+.header{
+    padding: 2em 0 4em 0;
+    background-color: light-theme.$very-pale-blue-top__bg-pattern;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+
+
+.header .content-wraper{
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 0 1.5em;
+}
+
+
+.header h1{
+    font-size: 1.5rem;
+}
+
+
+p{
+    color: light-theme.$dark-grayish-blue__text;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.header__text p{
+    margin-top: 0.25em;
+}
+
+hr{
+    height: 1px;
+    border-bottom: none;
+    margin: 1em 0;
+}
+
+.toggle-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5em;
+}
+
+.btn{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 50px;
+    height: 27px;
+    border-radius: 30px;
+    background-color: light-theme.$toggle-btn-bg;
+    cursor: pointer;
+}
+
+.toggle-btn{
+    height: 78%;
+    aspect-ratio: 1;
+    margin-right: 0.2em;
+    border-radius: 50%;
+    background-color: light-theme.$white-bg;
+}
+
+.btn.active{
+    background-image: dark-theme.$toggle-btn-bg;
+}
+
+.btn.active .toggle-btn{
+    transform: translateX(-107%);
+    background-color: dark-theme.$very-dark-blue__bg;
+}
+
+//Transitions
+.header{
+    h1, p, hr, .toggle-btn, .btn{
+        transition: all 0.5s ease 50ms; 
+    }
+}
+
+
+//Dark theme styling is bleow
+.header[data-theme = "dark"]{
+    background-color: dark-theme.$very-dark-blue__top-bg-pattern;
+
+    h1{
+        color: white;
+    }
+
+    p{
+        color: dark-theme.$desaturated-blue__text;
+    }
+
+    hr{
+        border-color: dark-theme.$desaturated-blue__text;
+    }
+}
+
+//big screens styles
+
+
+@include mixin.screenMinWidthStyle(config.$first-break-point){
+    .header .content-wraper{
+        display: flex;
+        max-width: 1240px;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+
+    .toggle-container{
+        gap: 1em;
+    }
+}

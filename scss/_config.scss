@@ -1,0 +1,46 @@
+@use "./mixin"; 
+@use "./dark-theme";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+$lime-green: hsl(163, 72%, 41%);
+$bright-red: hsl(356, 69%, 56%);
+$facebook: hsl(208, 92%, 53%);
+$twitter: hsl(203, 89%, 53%);
+$instagram: linear-gradient(to right, hsl(37, 97%, 70%), hsl(329, 70%, 58%));
+$youtube: hsl(348, 97%, 39%);
+$card-top-bg: ($facebook $twitter $instagram $youtube);
+$mian-font-family: 'Inter', sans-serif;
+$first-break-point: 600px;
+
+
+*, *::before, *::after{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: $mian-font-family;
+}
+
+body, .footer, .footer a{
+    transition: all 0.5s ease;
+}
+
+body[data-theme="dark"]{
+    background-color: dark-theme.$very-dark-blue__bg;
+}
+
+.main > *:not(.header){
+    padding: 0 1.5em;
+}
+
+.footer[data-theme="dark"]{
+    color: white;
+}
+.footer[data-theme="dark"] a{
+    color: lightcoral;
+}
+
+@include mixin.screenMinWidthStyle($first-break-point){
+    .mobile{
+        display: none;
+    }
+}

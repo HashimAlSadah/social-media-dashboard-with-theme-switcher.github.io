@@ -1,0 +1,156 @@
+@use "./config";
+@use "./light-theme";
+@use "./dark-theme";
+@use "sass:list";
+@use "./mixin";
+
+.accounts{
+    position: relative;
+    top: -2.5em;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.account-card{
+    position: relative;
+    padding: 2em 0 1em 0;
+    margin: 0 auto;
+    background-color: light-theme.$light-grayish-blue__card-bg;
+    border-radius: 4px;
+    text-align: center;
+    overflow-x: hidden;
+}
+
+.account-card:not(.account-card:first-child){
+    margin: 1em auto;
+}
+
+.account-card::before{
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 4px;
+    // background-color: red;
+}
+
+@for $i from 1 through 4{
+    @if($i == 3){
+        .account-card:nth-child(#{$i})::before{
+            background-image: config.$instagram;
+        }
+    }
+    .account-card:nth-child(#{$i})::before{
+        background-color: list.nth(config.$card-top-bg, $i);
+    }
+}
+
+.account-info{
+    display: flex;
+    justify-content: center;
+    gap: 0.5em;
+}
+
+.account-card h2{
+    font-size: 2.8rem;
+    margin: 0.3em 0 0 0;
+}
+
+.account-card__text{
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 1em;
+}
+
+.account-card small{
+    position: relative;
+    font-weight: 700;
+}
+
+.account-card small::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    aspect-ratio: 1;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    transform: translate(-100%);
+
+}
+
+.account-card small.green{
+    color: config.$lime-green;
+    &::before{
+        background-image: url("../images/icon-up.svg");
+    }
+}
+
+.account-card small.red{
+    color: config.$bright-red;
+    &::before{
+        background-image: url("../images/icon-down.svg");
+    }
+}
+
+//Transitions
+.account-card, 
+.accounts h2,
+.accounts p{
+    transition: all 0.5s ease;
+}
+
+.account-card{
+    transition: filter 0.4s ease;
+}
+
+//Dark theme  styling
+
+.accounts[data-theme="dark"]{
+    .account-card{
+        background-color: dark-theme.$dark-desaturated-blue__card-bg;
+    }
+
+    h2{
+        color: white;
+    }
+
+    p{
+        color: dark-theme.$desaturated-blue__text;
+    }
+}
+
+@include mixin.screenMinWidthStyle(config.$first-break-point){
+    .accounts{
+        max-width: 1240px;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1em;
+    }
+
+    .account-card,  .account-card:not(.account-card:first-child){
+        margin: unset;
+    }   
+
+    .account-card{
+        min-width: 250px;
+        max-width: 300px;
+        flex: 1;
+        cursor: pointer;
+        &:hover{
+            filter: brightness(90%);
+        }
+    }
+
+    .accounts[data-theme="dark"] .account-card:hover{
+        filter: brightness(130%);
+    }
+}
+
+
+

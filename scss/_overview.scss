@@ -1,0 +1,132 @@
+@use "./config";
+@use "./light-theme";
+@use "./dark-theme";
+@use "./mixin";
+
+.overview{
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.overview__title{
+    font-size: 1.4rem;
+    color: light-theme.$dark-grayish-blue__text;
+    margin-bottom: 0.90em;   
+    max-width: 350px; 
+}
+
+.overview-card{
+    background-color: light-theme.$light-grayish-blue__card-bg;
+    margin: 1em auto;
+    padding: 1.5em 1.5em 1em;
+    border-radius: 4px;
+}
+
+.card-info{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-info p{
+    font-size: 0.80rem;
+}
+
+.overview-card .stats{
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-top: 1.0em;
+}
+
+.overview-card h3{
+    font-size: 1.9rem;
+}
+
+.overview-card .stats-percentage{
+    position: relative;
+    font-size: 0.8rem;
+}
+
+.overview-card .stats-percentage::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    aspect-ratio: 1;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    transform: translate(-100%);
+}
+
+.overview-card .stats-percentage.green{
+    color: config.$lime-green;
+    &::before{
+        background-image: url("../images/icon-up.svg");
+    }
+}
+
+.overview-card .stats-percentage.red{
+    color: config.$bright-red;
+    &::before{
+        background-image: url("../images/icon-down.svg");
+    }
+}
+
+//Transition
+
+.overview-card,
+.overview__title,
+.overview-card h3, 
+.card-info p{
+    transition: all 0.5s ease;
+}
+
+.overview-card{
+    transition: filter 0.4s ease;
+}
+
+//Dark theme styles
+
+.overview[data-theme="dark"]{
+    .overview-card{
+        background-color: dark-theme.$dark-desaturated-blue__card-bg;
+    }
+
+    .overview__title{
+        color: white;
+    }
+
+    .overview-card h3{
+        color: white;
+    }
+
+    .card-info p{
+        color: dark-theme.$desaturated-blue__text;
+    }
+}
+
+@include mixin.screenMinWidthStyle(config.$first-break-point){
+    .overview{
+        max-width: 1240px;
+    } 
+
+    .overview-grid{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1em;
+    }
+        
+    .overview-card{
+        margin: unset;
+        cursor: pointer;
+        &:hover{
+            filter: brightness(90%);
+        }
+    }
+
+    .overview[data-theme="dark"] .overview-card:hover{
+        filter: brightness(130%);
+    }
+}
